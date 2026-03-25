@@ -33,6 +33,12 @@ public class ConsoleMenu
                     case 3:
                         PrintEquipment();
                         break;
+                    case 4:
+                        PrintAvaiableEquipment();
+                        break;
+                    case 5:
+                        PrintRenting();
+                        break;
                     default:
                         Console.WriteLine("To nie jest poprawna opcja!");
                         break;
@@ -209,5 +215,50 @@ public class ConsoleMenu
             Console.WriteLine(_rentalService.EquipmentList[i]);
         }
         Console.ReadKey();
+    }
+
+    private void PrintAvaiableEquipment()
+    {
+        Console.Clear();
+        List<Equipment> availableEquipment = _rentalService.GetAvailableEquipment();
+        for (int i = 0; i < availableEquipment.Count; i++)
+        {
+            Console.WriteLine(_rentalService.EquipmentList[i]);
+        }
+        Console.ReadKey();
+    }
+
+    private void PrintRenting()
+    {
+        Console.Clear();
+        Console.WriteLine("Który użytkownik wybożycza?");
+        for (int i = 0; i < _rentalService.UserList.Count; i++)
+        {
+            Console.WriteLine(i+". "+_rentalService.UserList[i]);
+        }
+
+        int userInput;
+        userInput = Int32.Parse(Console.ReadLine());
+        Console.WriteLine("Co wyporzyczamy");
+        for (int i = 0; i < _rentalService.EquipmentList.Count; i++)
+        {
+            Console.WriteLine(i+". "+_rentalService.EquipmentList[i]);
+        }
+        int equipmentInput;
+        equipmentInput = Int32.Parse(Console.ReadLine());
+        Console.WriteLine("Do kiedy wypożycza (użyj formatu RRRR-MM-DD)?");
+        DateOnly dateInput;
+        dateInput = DateOnly.Parse(Console.ReadLine());
+        if (_rentalService.Rent(_rentalService.UserList[userInput], _rentalService.EquipmentList[equipmentInput],
+                dateInput))
+        {
+            Console.WriteLine("Poprawnie wypożyczono!");
+            Console.ReadKey();
+        }
+        else
+        {
+            Console.WriteLine("Nie można dokonać wypożyczenia!");
+            Console.ReadKey();
+        }
     }
 }

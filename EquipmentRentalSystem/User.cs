@@ -16,4 +16,8 @@ public class User
         Type = type;
     }
 
+    public override string ToString()
+    {
+        return ($"Imie: {Name}, Nazwisko: {Surname}, Typ: {Type}");
+    }
 }
