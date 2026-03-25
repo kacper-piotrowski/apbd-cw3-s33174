@@ -2,7 +2,7 @@
 
 public abstract class Equipment
 {
-    public static int IdCounter { get; set; } = 1;
+    private static int IdCounter { get; set; } = 1;
     public int Id { get; }
     public string Name { get; }
     public string Department { get; }

@@ -10,4 +10,9 @@ public class Projector : Equipment
         Resolution = resolution;
         Brightness = brightness;
         }
+    
+    public override string ToString()
+    {
+        return ($"Projektor: {Name}, wydział: {Department}, jest dostępny:{IsAvailable}, rozdzielczość: {Resolution}, jasność:{Brightness}");
+    }
 }

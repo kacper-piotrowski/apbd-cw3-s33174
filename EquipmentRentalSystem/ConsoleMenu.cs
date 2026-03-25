@@ -30,6 +30,9 @@ public class ConsoleMenu
                     case 2:
                         AddEquipment();
                         break;
+                    case 3:
+                        PrintEquipment();
+                        break;
                     default:
                         Console.WriteLine("To nie jest poprawna opcja!");
                         break;
@@ -196,5 +199,15 @@ public class ConsoleMenu
             return;
         }
         
+    }
+    
+    private void PrintEquipment()
+    {
+        Console.Clear();
+        for (int i = 0; i < _rentalService.EquipmentList.Count(); i++)
+        {
+            Console.WriteLine(_rentalService.EquipmentList[i]);
+        }
+        Console.ReadKey();
     }
 }

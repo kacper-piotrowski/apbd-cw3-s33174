@@ -10,4 +10,9 @@ public class Camera : Equipment
         Lens = lens;
         Batteries = batteries;
     }
+    
+    public override string ToString()
+    {
+        return ($"Aparat: {Name}, wydział: {Department}, jest dostępny:{IsAvailable}, obiektyw: {Lens}, liczba baterii:{Batteries}");
+    }
 }

@@ -10,4 +10,9 @@ public class Laptop : Equipment
         Processor = processor;
         GraphicsCard = graphicsCard;
     }
+
+    public override string ToString()
+    {
+        return ($"Laptop: {Name}, wydział: {Department}, jest dostępny: {IsAvailable}, procesor: {Processor}, karta graficzna: {GraphicsCard}");
+    }
 }
