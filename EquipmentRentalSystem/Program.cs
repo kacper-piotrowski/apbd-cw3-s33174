@@ -4,6 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        RentalService Rs = new RentalService();
+        ConsoleMenu Menu = new ConsoleMenu(Rs);
+        Menu.Run();
     }
 }
