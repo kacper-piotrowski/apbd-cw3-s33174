@@ -39,6 +39,23 @@ public class ConsoleMenu
                     case 5:
                         PrintRenting();
                         break;
+                    case 6:
+                        PrintReturning();
+                        break;
+                    case 7:
+                        PrintChangeStatus();
+                        break;
+                    case 8:
+                        PrintUserRentals();
+                        break;
+                    case 9:
+                        PrintOverduerRentals();
+                        break;
+                    case 10:
+                        Console.Clear();
+                        Console.WriteLine(_rentalService.GenerateSummary());
+                        Console.ReadKey();
+                        break;
                     default:
                         Console.WriteLine("To nie jest poprawna opcja!");
                         break;
@@ -223,7 +240,7 @@ public class ConsoleMenu
         List<Equipment> availableEquipment = _rentalService.GetAvailableEquipment();
         for (int i = 0; i < availableEquipment.Count; i++)
         {
-            Console.WriteLine(_rentalService.EquipmentList[i]);
+            Console.WriteLine(availableEquipment[i]);
         }
         Console.ReadKey();
     }
@@ -260,5 +277,97 @@ public class ConsoleMenu
             Console.WriteLine("Nie można dokonać wypożyczenia!");
             Console.ReadKey();
         }
+    }
+
+    private void PrintReturning()
+    {
+        Console.Clear();
+        Console.WriteLine("Który użytkownik zwraca?");
+        for (int i = 0; i < _rentalService.UserList.Count; i++)
+        {
+            Console.WriteLine(i+". "+_rentalService.UserList[i]);
+        }
+        
+        int userInput;
+        userInput = Int32.Parse(Console.ReadLine());
+        Console.WriteLine("Co zwraca");
+        for (int i = 0; i < _rentalService.EquipmentList.Count; i++)
+        {
+            Console.WriteLine(i+". "+_rentalService.EquipmentList[i]);
+        }
+        int equipmentInput;
+        equipmentInput = Int32.Parse(Console.ReadLine());
+
+        int returnRentalIndex=0;
+
+        for (int i = 0; i < _rentalService.RentalList.Count; i++)
+        {
+            if (_rentalService.RentalList[i].RentalUser == _rentalService.UserList[userInput]
+                && _rentalService.RentalList[i].RentedEquipment == _rentalService.EquipmentList[equipmentInput]
+                && _rentalService.RentalList[i].ActualReturnDate == null) 
+            {
+                returnRentalIndex = i;
+                break;
+            }
+        }
+        
+        if (_rentalService.Return(_rentalService.UserList[userInput], _rentalService.EquipmentList[equipmentInput]))
+        {
+            _rentalService.RentalList[returnRentalIndex].ActualReturnDate=DateOnly.FromDateTime(DateTime.Now);
+            Console.WriteLine("Poprawnie zwrócono!");
+            Console.WriteLine($"Należne opłaty: {_rentalService.RentalList[returnRentalIndex].Fees}");
+            Console.ReadKey();
+        }
+        else
+        {
+            Console.WriteLine("Nie można dokonać takiego zwrotu!");
+            Console.ReadKey();
+        }
+    }
+
+    private void PrintChangeStatus()
+    {
+        Console.Clear();
+        Console.WriteLine("Czego chcesz zmienić status");
+        for (int i = 0; i < _rentalService.EquipmentList.Count; i++)
+        {
+            Console.WriteLine(i+". "+_rentalService.EquipmentList[i]);
+        }
+        int equipmentInput;
+        equipmentInput = Int32.Parse(Console.ReadLine());
+        _rentalService.SwitchEquipmentStatus(_rentalService.EquipmentList[equipmentInput]);
+        Console.WriteLine($"Zmieniono! {_rentalService.EquipmentList[equipmentInput]}");
+        Console.ReadKey();
+    }
+
+    private void PrintUserRentals()
+    {
+        Console.Clear();
+        Console.WriteLine("Który użytkownik chcesz sprawdzić?");
+        for (int i = 0; i < _rentalService.UserList.Count; i++)
+        {
+            Console.WriteLine(i+". "+_rentalService.UserList[i]);
+        }
+
+        int userInput;
+        userInput = Int32.Parse(Console.ReadLine());
+        List<Rental> userRentals = _rentalService.GetActiveUserRentals(_rentalService.UserList[userInput]);
+        for (int i = 0; i < userRentals.Count; i++)
+        {
+            Console.WriteLine($"{i+1}. Wypożyczono: {userRentals[i].RentedEquipment}, Data oddania:{userRentals[i].SetReturnDate}");
+        }
+        Console.ReadKey();
+    }
+    
+    private void PrintOverduerRentals()
+    {
+        Console.Clear();
+        
+        List<Rental> overdueRentals = _rentalService.GetOverdueRentals();
+        for (int i = 0; i < overdueRentals.Count; i++)
+        {
+            Console.WriteLine($"{i+1}. Wypożyczono: {overdueRentals[i].RentedEquipment}, Użytkownik:{overdueRentals[i].RentalUser}, Data oddania:{overdueRentals[i].SetReturnDate}");
+        }
+        Console.ReadKey();
     }
 }
