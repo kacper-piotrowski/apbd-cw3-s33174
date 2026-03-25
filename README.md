@@ -1,7 +1,7 @@
 
 # Equipment Rental System
 
-Mój projekt składa się z trzech klas sprzętu dziedziczących po abstrakcyjnym Equipment, klasy, User oraz pomocniczego enuma UserType, klasy Rental reprezentującej jedno wypożyczenie, lasy RentalService w której znajduje się cała logika, oraz klasy ConsoleMenu która zajmuje sie graficzną prezentacją systemu. Dzięki takiemu podziałowi wszystkie ważne funkcje systemu są rozdzielone.
+Mój projekt składa się z trzech klas sprzętu dziedziczących po abstrakcyjnym Equipment, klasy, User oraz pomocniczego enuma UserType, klasy Rental reprezentującej jedno wypożyczenie, klasy RentalService w której znajduje się cała logika, oraz klasy ConsoleMenu która zajmuje sie graficzną prezentacją systemu. Dzięki takiemu podziałowi wszystkie ważne funkcje systemu są rozdzielone. W Program.cs jest zawarta jedynie inicjalizacja Serwisu i Menu oraz jedna metoda z trybem demo, która oddziałuje bezpośrednio na Serwisie.
 
 
 
