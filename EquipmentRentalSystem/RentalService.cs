@@ -1,4 +1,6 @@
-﻿namespace EquipmentRentalSystem;
+﻿using System.Text;
+
+namespace EquipmentRentalSystem;
 
 public class RentalService
 {
@@ -137,5 +139,15 @@ public class RentalService
             }
         }
         return overdueRentals;
+    }
+
+    public String GenerateSummary()
+    {
+        StringBuilder summary = new StringBuilder();
+        summary.Append($"Liczba użytkowników w systemie: {UserList.Count};");
+        summary.Append($"Liczba sprzętu w systemie: {EquipmentList.Count};");
+        summary.Append($"Liczba wszystkich wyporzyczeń: {RentalList.Count};");
+        summary.Append($"Liczba przeterminowanych wypożyczeń: {GetOverdueRentals().Count};");
+        return summary.ToString();
     }
 }
